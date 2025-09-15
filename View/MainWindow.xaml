@@ -1,0 +1,258 @@
+﻿<Window x:Class="HoleFramingModule.View.MainWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:RTVM="clr-namespace:RevitTools.ViewModel;assembly=RevitTools"
+             xmlns:local="clr-namespace:HoleFramingModule.View"
+             mc:Ignorable="d" 
+             WindowStartupLocation="CenterScreen"
+        Height="900"
+        Width="300"
+        Title="Обрамление отверстий"
+        ResizeMode="NoResize"
+        Name="mainWindow">
+
+    <Window.Resources>
+        <!-- Стиль для показа ошибки: красная рамка + сообщение -->
+        <Style x:Key="IntTextBox" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={RelativeSource Self},
+                        Path=(Validation.Errors)[0].ErrorContent}" />
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="Margin" Value="0 3 0 3"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        
+        
+        
+        
+        
+        <StackPanel Grid.Row="0"
+                    Orientation="Vertical">
+            <GroupBox Header="Прямые стержни в продольном направлении">
+                <StackPanel>
+                    <Label Content="Тип арматурных стержней"/>
+                    <ComboBox ItemsSource="{Binding RebarTypes}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding SelectedLongRebar}"/>
+
+                    <Label Content="Длина анкеровки, мм"/>
+                    <TextBox Style="{StaticResource IntTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="LongAnchLength" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Content="Количество рядов"/>
+                    <TextBox Style="{StaticResource IntTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="LongRebarCount" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Content="Шаг стержней, мм"/>
+                    <TextBox Style="{StaticResource IntTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="LongRebarStep" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+            </GroupBox>
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <GroupBox Header="Прямые стержни в поперечном направлении">
+                <StackPanel>
+                    <Label Content="Тип арматурных стержней"/>
+                    <ComboBox ItemsSource="{Binding RebarTypes}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding SelectedTransverseRebar}"/>
+
+                    <Label Content="Длина анкеровки, мм"/>
+                    <TextBox Style="{StaticResource IntTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="TransverseAnchLength" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Content="Количество рядов"/>
+                    <TextBox Style="{StaticResource IntTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="TransverseRebarCount" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Content="Шаг стержней, мм"/>
+                    <TextBox Style="{StaticResource IntTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="TransverseRebarStep" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="П-образные стержни">
+                <StackPanel>
+                    <Label Content="Тип арматурных стержней"/>
+                    <ComboBox ItemsSource="{Binding RebarTypes}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding SelectedBentRebar}"/>
+
+                    <Label Content="Длина гнутой части, мм"/>
+                    <TextBox Style="{StaticResource IntTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="BentRebarLength" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Content="Шаг стержней, мм"/>
+                    <TextBox Style="{StaticResource IntTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="BentRebarStep" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+            </GroupBox>
+
+            
+            
+            
+            
+            
+            
+            
+            <GroupBox Header="Общие настройки">
+                <StackPanel>
+                    <Label Content="Диаметр фоновой арматуры, мм"/>
+                    <ComboBox ItemsSource="{Binding RebarDiametersList}"
+                                SelectedItem="{Binding BackRebarDiameter}"/>
+                    
+                    <RadioButton GroupName="RebarCover"
+                                 Content="Использовать защитный слой из модели"
+                                 IsChecked="{Binding IsRebarCoverFromModel}"/>
+
+                    <RadioButton GroupName="RebarCover"
+                                 Content="Ввести защитный слой вручную"
+                                 IsChecked="{Binding IsRebarCoverFromUser}"/>
+
+                    <Label Content="Защитный слой сверху, мм"
+                            IsEnabled="{Binding IsControlEnabled}"/>
+                    <TextBox Style="{StaticResource IntTextBox}"
+                            IsEnabled="{Binding IsControlEnabled}">
+                        <TextBox.Text>
+                            <Binding Path="RebarCoverUp" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Content="Защитный слой снизу, мм"
+                            IsEnabled="{Binding IsControlEnabled}"/>
+                    <TextBox Style="{StaticResource IntTextBox}"
+                            IsEnabled="{Binding IsControlEnabled}">
+                        <TextBox.Text>
+                            <Binding Path="RebarCoverDown" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Content="Отступ от отверстия, мм"/>
+                    <TextBox Style="{StaticResource IntTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="RebarOffset" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <RTVM:IntegerValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Button Width="100"
+                Margin="0 0 0 3"
+                Content="ОК"
+                Command="{Binding OkBtnCommand}"
+                CommandParameter="{Binding ElementName=mainWindow}"/>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Button Width="100"
+                Margin="0 0 0 3"
+                Content="Отмена"
+                Command="{Binding CancelBtnCommand}"
+                CommandParameter="{Binding ElementName=mainWindow}"/>
+            </Grid>
+        </Grid>
+
+
+    </Grid>
+</Window>
